@@ -1,5 +1,5 @@
-#include "string.h"
-#include "iostream"
+#include <string>
+#include <iostream>
 #include "fstream"
 #include "ninja.h"
 
@@ -94,6 +94,7 @@ string characterChange(char character)
     return characters;
 }
 
+
 string firtsName(string &name)
 {
     string fname = "";
@@ -117,12 +118,21 @@ string lastName(string &name)
     return lname;
 }
 
+void ninjaNaming()
+{
+    cout << "Write your firstname." << endl;
+    string firstn;
+    cin >> firstn;
+    cout << "Write your lastname." << endl;
+    string lastn;
+    cin >> lastn;
+    cout <<  "Your ninja name is " << firtsName(firstn) << " " << lastName(lastn) << endl;
+}
+
 int main()
 {
-    string firstnametest = "Tamas";
-    string lastnametest = "Horvath";
-    cout << firtsName(firstnametest) << endl;
-    cout << lastName(lastnametest) << endl;
+    ninjaNaming();
+
 
     return 0;
 };
