@@ -1,13 +1,15 @@
-#include <string>
+#include "string"
 #include <iostream>
 #include "fstream"
 #include "ninja.h"
+#include <vector>
+#include "stdlib.h"
 
 using namespace std;
 
 string characterChange(char character)
 {
-    string characters;
+    string characters = "error";
 
     switch(character){
         case 'a' | 'A':
@@ -88,10 +90,17 @@ string characterChange(char character)
         case 'z' | 'Z':
             characters = "zi";
             break;
-        default:
-            cout << "Invalid character" << endl;
         }
-    return characters;
+
+
+   if (characters == "error")
+    {
+        cout << "Invalid character: " << character << endl;
+        exit(1);
+    } else
+    {
+        return characters;
+    }
 }
 
 
@@ -120,19 +129,61 @@ string lastName(string &name)
 
 void ninjaNaming()
 {
-    cout << "Write your firstname." << endl;
     string firstn;
-    cin >> firstn;
-    cout << "Write your lastname." << endl;
     string lastn;
-    cin >> lastn;
+    do
+    {
+        if (firstn != "" or lastn != "")
+        {
+            cout << "To few character! (firstname min 3 and lastname min 4)" << endl;
+        }
+        cout << "Write your firstname." << endl;
+        cin >> firstn;
+        cout << "Write your lastname." << endl;
+        cin >> lastn;
+    } while (firstn.length() < 3 or lastn.length() < 4);
+
     cout <<  "Your ninja name is " << firtsName(firstn) << " " << lastName(lastn) << endl;
 }
+
+std::vector<std::vector<char>> inputMap()
+{
+    ifstream inputFile("C:\\Users\\Ifune\\Desktop\\input\\maps\\06_in");
+    if(!inputFile)
+    {
+        cout<<"Couldn't open the file"<<endl;
+        exit(1);
+    }
+
+    unsigned int row = 0;
+    string line;
+    string inputInToString;
+    while( getline(inputFile, line)  )
+    {
+        inputInToString += line;
+        row++;
+        cout << line << endl;
+    }
+
+    unsigned int column = inputInToString.length() / row;
+    std::vector <std::vector<char> > map(column ,std::vector<char>(row));
+    for (unsigned int j = 0; j < row; j++)
+    {
+        for (unsigned int i = 0; i < column; i++)
+        {
+            map[i][j] = inputInToString[j * 5 + i];
+        }
+    }
+
+    return map;
+}
+
+
 
 int main()
 {
     ninjaNaming();
-
+    std::vector<std::vector<char>> map = inputMap();
 
     return 0;
 };
