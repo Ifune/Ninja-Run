@@ -103,7 +103,6 @@ string characterChange(char character)
     }
 }
 
-
 string firtsName(string &name)
 {
     string fname = "";
@@ -171,19 +170,19 @@ std::vector<std::vector<char>> inputMap()
     {
         for (unsigned int i = 0; i < column; i++)
         {
-            map[i][j] = inputInToString[j * 5 + i];
+            map[j][i] = inputInToString[j * 5 + i];
         }
     }
 
     return map;
 }
 
-
-
 int main()
 {
     ninjaNaming();
     std::vector<std::vector<char>> map = inputMap();
+    Ninja n;
+    n.startPoint(map);
 
     return 0;
 };
