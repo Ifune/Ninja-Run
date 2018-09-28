@@ -10,8 +10,9 @@ using namespace std;
 string characterChange(char character)
 {
     string characters = "error";
-
-    switch(character){
+    //Switch the character to characters
+    switch(character)
+    {
         case 'a' | 'A':
             characters = "ka";
             break;
@@ -92,8 +93,7 @@ string characterChange(char character)
             break;
         }
 
-
-   if (characters == "error")
+   if (characters == "error")   //If the character is not in the case
     {
         cout << "Invalid character: " << character << endl;
         exit(1);
@@ -105,6 +105,7 @@ string characterChange(char character)
 
 string firtsName(string &name)
 {
+    //The first name conversion to ninja name
     string fname = "";
     unsigned int fnameLength = name.length();
     fname += characterChange(name[fnameLength - 3]);
@@ -116,6 +117,7 @@ string firtsName(string &name)
 
 string lastName(string &name)
 {
+    //The last name conversion to ninja name
     string lname = "";
     unsigned int fnameLength = name.length();
     lname += characterChange(name[fnameLength - 4]);
@@ -128,6 +130,7 @@ string lastName(string &name)
 
 void ninjaNaming()
 {
+    //The ask for your first and last name and call other converter functions
     string firstn;
     string lastn;
     do
@@ -145,44 +148,45 @@ void ninjaNaming()
     cout <<  "Your ninja name is " << firtsName(firstn) << " " << lastName(lastn) << endl;
 }
 
-std::vector<std::vector<char>> inputMap()
+std::vector<std::vector<char> > inputMap()
 {
-    ifstream inputFile("C:\\Users\\Ifune\\Desktop\\input\\maps\\06_in");
+    //
+    ifstream inputFile("C:\\Users\\Ifune\\Desktop\\input\\maps\\11_in");
     if(!inputFile)
     {
-        cout<<"Couldn't open the file"<<endl;
+        cout<<"Couldn't open the file"<<endl;   //If it could'not open the file
         exit(1);
     }
 
     unsigned int row = 0;
     string line;
     string inputInToString;
-    while( getline(inputFile, line)  )
+    while( getline(inputFile, line) )   //Give the file content to a string
     {
         inputInToString += line;
-        row++;
-        cout << line << endl;
+        row++;  //Count row
     }
 
-    unsigned int column = inputInToString.length() / row;
-    std::vector <std::vector<char> > map(column ,std::vector<char>(row));
-    for (unsigned int j = 0; j < row; j++)
+    unsigned int column = (inputInToString.length() / row); //Count column
+    std::vector <std::vector<char> > map(column,std::vector<char>(row));
+    for (unsigned int i = 0; i < row; i++)
     {
-        for (unsigned int i = 0; i < column; i++)
+        for (unsigned int j = 0; j < column; j++)
         {
-            map[j][i] = inputInToString[j * 5 + i];
+            map[j][i] = inputInToString[(i * column) + j];  //Give the content to a 2d vector
         }
     }
 
-    return map;
+    return map; //Return 2d vector
 }
 
 int main()
 {
-    ninjaNaming();
-    std::vector<std::vector<char>> map = inputMap();
-    Ninja n;
-    n.startPoint(map);
+    ninjaNaming();  //Call the ninja nameing
+    Ninja ninja;    //Create ninja
+    ninja.setMissionMap(inputMap());    //Give ninja the 2d vector
+    ninja.startPoint(); //Call starting coordiation counter and setter
+    ninja.move();   //Call the movement
 
     return 0;
 };
